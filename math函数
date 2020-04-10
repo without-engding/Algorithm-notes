@@ -1,0 +1,13 @@
+使用前加上math.h
+
+fabs(double x) 绝对值
+
+floor(double x)向下取整
+
+ceil(double x)向上取整
+
+pow(double r,double p) 返回r的p次
+
+log(double x),以e为底 如果相求logab=log(b)/log(a)
+
+round(double x) 四舍五入
