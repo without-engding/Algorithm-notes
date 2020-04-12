@@ -1,4 +1,54 @@
 strlen 得到字符数组中第一个\0前的个数
 
 strcmp:返回两个字符串大小比较结果，比较原则是按字典序
-暂定
+其中字典序中，a为最小，
+现有字符数组 a,b
+当a<b return 负整数
+当a==b  return 0;
+当a>b return 正整数
+
+strcpy, 复制字符串
+格式strcpy(a,b),把b复制给a，包括\0
+
+strcat 连接字符串
+格式strcpy(a,b),把b接到a后面，
+
+sscanf和sprintf是处理字符串的利器
+属于stdio头文件中
+其中sscanf用法如下：
+#include<stdio.h>
+int main()
+{
+	char str[20]="123";
+	int n;
+	sscanf(str,"%d",&n);
+	printf("%d",n);
+}
+其作用是把字符数组str中的内容以%d的格式写到n中
+而sprintf用法如下：
+#include<stdio.h>
+int main()
+{
+	char str[20];
+	int n=123;
+	sprintf(str,"%d",n);
+	printf("%s",str);
+	
+}
+其作用是把n以%d的格式写到字符数组str中
+其中sscanf主要实现字符串数据内容提取，而sprinf主要进行数据对字符串数组的复写
+#include<stdio.h>
+int main()
+{
+	char str[20]="2020/4/12/13:45";
+	int y,m,d,h,min;
+	sscanf(str,"%d/%d/%d/%d:%d",&y,&m,&d,&h,&min);
+	printf("将str中的数据提取出，更改修饰符:");
+	printf("%d年%d月%d日%d时%d分\n",y,m,d,h,min);
+	sprintf(str,"%d年%d月%d日%d时%d分",y,m,d,h,min);
+	printf("将提取出的数据进行复写，重新写入str中:");
+	printf("%s",str);
+	
+}
+
+
