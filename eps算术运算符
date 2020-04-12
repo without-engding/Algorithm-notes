@@ -1,0 +1,65 @@
+eps=1e-8
+
+==：
+#include<stdio.h>
+#include<math.h>
+#define Epu(a,b)(fabs((a)-(b))<(eps))
+const double eps=1e-8;//这里说明，1e前的1为数字1 
+int main()
+{
+	double a=3.1415926;
+	if(Epu(a,3.1415927))
+	printf("true");
+	else
+	printf("false");
+	return 0;
+}
+
+>:
+#include<stdio.h>
+#include<math.h>
+#define More(a,b)(((a)-(b))>(eps))
+const double eps=1e-8;
+int main()
+{
+	double a=3.1415926;
+	if(More(a,3.1415927))
+	printf("true");
+	else
+	printf("false");
+	return 0;
+}
+
+<:
+#include<stdio.h>
+#include<math.h>
+#define Less(a,b)(((a)-(b))<(eps))
+const double eps=1e-8;
+int main()
+{
+	double a=3.1415926;
+	if(Less(a,3.1415927))
+	printf("true");
+	else
+	printf("false");
+	return 0;
+}
+
+>=:
+#include<stdio.h>
+#include<math.h>
+#define MoreEpu(a,b)(((a)-(b))>(-eps))
+const double eps=1e-8;
+int main()
+{
+	double a=3.1415926;
+	if(MoreEpu(a,3.1415927))
+	printf("true");
+	else
+	printf("false");
+	return 0;
+}
+
+其他情况已经类似，不需要再举例说明
+其中，要确定
+当a与b进行比较时，b的数值应为：(b-eps,b+eps)
