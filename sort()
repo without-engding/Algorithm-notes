@@ -1,0 +1,34 @@
+#include<algorithm>头文件
+sort(首元素地址，尾元素地址，cmp函数)
+其中主要说明cmp函数
+写法为：
+bool cmp(int a, int b)
+{
+  return a>b;//实现从大到小
+}
+
+bool cmp(结构体名 a,结构体名 b)
+{
+  return a.x>b.x;
+}
+
+其中如果想实现，x从大到小，当x相等的时候，按照y的大小从小到大排序
+bool cmp(node a ,node b)
+{
+  if(a.x!=b.x) return a.x>b.x;
+  else return a.y<b.y;
+}
+
+其中对string类型进行排序的时候写法如下：
+bool cmp(string a,string b)
+{
+  return a.length()>b.length();
+}
+
+当两个学生分数不一致时，分数高排前面
+否则姓名按字典序小的排在前面
+bool cmp(Studen a ,Student b)
+{
+  if(a.socre!=b.socre)return a.socre>b.socre;
+  else return strcmp(a.name,b.name)<0;
+}
