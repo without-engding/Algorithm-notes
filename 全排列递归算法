@@ -1,2 +1,100 @@
 链接：https://pan.baidu.com/s/1Xww27EX59Ird6PV3e14j2w 
 提取码：kutl
+视频资源如上
+
+以下是1-n这n个整数的排列代码
+#include<iostream>
+using namespace std;
+const int maxn=11;
+int n,P[maxn],hashLable[maxn]={false};
+void permutation(int index)
+{
+	if(index==n+1)
+	{
+		for(int i=1;i<=n;i++)
+			{
+				cout<<P[i];
+			}
+			cout<<endl;
+		return;
+	}
+	for(int x=1;x<=n;x++)
+	{
+		if(hashLable[x]==false)
+		{
+			P[index]=x;
+			hashLable[x]=true;
+			permutation(index+1);
+			hashLable[x]=false;
+		}
+	}
+}
+int main()
+{
+	n=3;
+	permutation(1);
+	return 0;
+}
+
+
+以下代码是我综合之前所学，给出的一点实践
+其目的是:
+输入要输入的数量后
+再输入任意顺序的数字进行全排列
+如，以上代码实现，12/123/1234/123456/等连续数字排列
+以下代码实现 1,3,7,5这四个非连续代码排列
+其中map的作用体现非常明显
+
+#include<iostream>
+#include<map>
+#include<stdio.h>
+#include<algorithm>
+using namespace std;
+const int maxn=11;
+int n,P[maxn],hashLable[maxn]={false},num[maxn];
+map<int,int>mp;
+void permutation(int index)
+{
+	if(index==n+1)
+	{
+		for(int i=1;i<=n;i++)
+			{
+				cout<<P[i];
+			}
+			cout<<endl;
+		return;
+	}
+	for(int x=1;x<=n;x++)
+	{
+		if(hashLable[x]==false)
+		{
+			map<int ,int>::iterator it =mp.find(x);
+			P[index]=it->second;
+			hashLable[x]=true;
+			permutation(index+1);
+			hashLable[x]=false;
+		}
+	}
+}
+int main()
+{
+	cout<<"please give the number you want to permutate:";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>num[i];
+
+	}
+	sort(num,num+n);
+		for(int i=1;i<=n;i++)
+	{
+		mp[i]=num[i-1];
+
+	}
+	for(map<int ,int>::iterator it=mp.begin();it!=mp.end();it++)
+	{
+		cout<<it->first<<it->second<<endl;
+	} 
+	permutation(1);
+	return 0;
+}
