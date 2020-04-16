@@ -1,0 +1,93 @@
+解法之一就是将因为每行每列都只能放一个，所以将列数和行数做映射关系，做全排列
+#include<iostream>
+#include<math.h> 
+using namespace std;
+int count=0;
+const int maxn=20;
+int n,hashTable[maxn]={false},P[maxn];
+void permutation(int index)
+{
+	if(index==n+1)
+	{
+		int temp=true;
+		for(int i=1;i<=n;i++)
+		{
+			for(int j=i+1;j<=n;j++)
+			{
+				if(fabs(i-j)==fabs(P[i]-P[j]))
+				temp=false;
+			}
+		}
+		if(temp)
+		count++;
+		return;
+	}
+	for(int x=1;x<=n;x++)
+	{
+		if(hashTable[x]==false)
+		{
+			P[index]=x;
+			hashTable[x]=true;
+			permutation(index+1);
+			hashTable[x]=false;
+		}
+	}
+}
+int main()
+{
+	n=8;
+	permutation(1);
+	cout<<count;
+	return 0;
+}
+以上的方法俗称暴力法，通过举例全排列，然后进行挑选，数据量较大
+
+以下这个方法是通过判断前几个皇后的位置判断后续排列是否可能，如果不可能则中断
+属于优化算法，称为回溯法
+即如果在达到递归边界前的某一层，由于一些事实导致已经不需要往任何一个子问题递归，就可以直接返回上一层
+#include<iostream>
+#include<math.h> 
+using namespace std;
+int count=0;
+const int maxn=20;
+int n,hashTable[maxn]={false},P[maxn];
+void permutation(int index)
+{
+	if(index==n+1)
+	{
+		count++;
+		return;
+	}
+	for(int x=1;x<=n;x++)
+	{
+		if(hashTable[x]==false)
+		{
+			int temp=true;
+			for(int per=1;per<index;per++)
+			{
+				if(fabs(index-per)==fabs(x-P[per]))
+				{
+					temp=false;
+					break;					
+				}
+
+			}
+			if(temp)
+		{
+			P[index]=x;
+			hashTable[x]=true;
+			permutation(index+1);
+			hashTable[x]=false;
+		}
+		}
+
+	
+	}
+}
+int main()
+{
+	n=8;
+	permutation(1);
+	cout<<count;
+	return 0;
+}
