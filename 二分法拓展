@@ -1,0 +1,23 @@
+拓展1 数学思想逼近法
+计算根号2的近似值，精确到10的-5次
+令浮点型left和right分别为1和2，根据mid处f(x)的值与2的大小选择子区间进行逼近
+
+接下来直接上代码
+const double eps=1e-5;//精度为10的-5次
+double f(double x)
+{
+	return x*x;
+} 
+double calSqrt()
+{
+	double left=1,right=2,mid;
+	while(right-left>eps)
+	{
+		mid=(right+left)/2;
+		if(f(mid)>2)
+		right=mid;
+		else
+		left=mid;
+	}
+	return mid;
+} 
