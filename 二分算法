@@ -1,0 +1,25 @@
+其中二分查找算法我不想涉及
+其中就涉及一个点，当二分上界数据超过int数据范围的一半时，mid=（left+right）/2,在计算过程中很容易溢出，所以更换为mid=left+(right-left)/2避免溢出
+
+这里主要说明一个模板，当寻找有序序列第一个满足某条件的元素位置问题时
+其中二分区间为左闭右闭
+int solve(int left,int right)//其中A数据存放有序数列，x为查找值 
+{
+	int mid;
+	while(left<right)
+	{
+		mid=(left+right)/2;
+		if("条件成立")//假设A数据存放有序数列，x为查找值,条件成立可写成A[mid]>=x||A[mid]>x 
+		{
+			right=mid;
+		} 
+		else
+		{
+			left=mid+1;
+		}
+	} 
+	return left;
+}
+
+当二分区间为左开有比
+把while语句进行改写while（left+1<right）
