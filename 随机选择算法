@@ -1,0 +1,15 @@
+从一个无序的序列中找出第k个大的数
+
+int randSelect(int A[],int left,int right,int k)
+{
+	if(left==right)return A[left];
+	int p=randPartition(A,left,right);
+	int m=p-left+1;
+	if(k==m)return A[p];
+	if(k<m)
+	return randSelect(A,left,p-1,k);
+	else
+	return randSelect(A,p+1,right,k-m);
+}
+
+这里要重点理解一下为什么在右侧寻找的时候，是找k-m
