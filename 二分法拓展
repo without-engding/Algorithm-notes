@@ -21,3 +21,52 @@ double calSqrt()
 	}
 	return mid;
 } 
+
+以二分法逼近为模板，进行数学建模，解决数学问题，如装水问题，其中列出相应的数学方程，在用逼近思想即可解答
+
+而对于木棍分割问题，将问题转化为第一个出现不符合条件的情况，-1即可得相应的结果
+#include<iostream>
+using namespace std;
+int N,wood[100];
+int F(int A[],int length,int N)
+{
+	int k=0;
+	for(int i=0;i<N;i++)
+	{
+		k+=A[i]/length;
+	}
+	return k;
+}
+int solve(int K,int len)
+{
+	int left=0,right=len,mid;
+	while(right>left)
+	{
+		mid=(left+right)/2;
+		if(F(wood,mid,N)<K)
+		{
+			right=mid;
+		}
+		else
+		{
+			left=mid+1;
+		}
+	}
+	return left-1;
+}
+int main()
+{
+	int K;
+	int max_len=-1;
+	cin>>N>>K;
+	for(int i=0;i<N;i++)
+	{
+		cin>>wood[i];
+		if(wood[i]>=max_len)
+		max_len=wood[i];
+		
+	}
+	cout<<solve(K,max_len);
+}
+这段代码要明确两点，第一，选择最长的一个木棍作为right的数值，这样才能包含所有
+第二，原本求最后一个k>=k时L的长度可以转化为第一个k<K的L，而二分模板只要在最后-1就可
