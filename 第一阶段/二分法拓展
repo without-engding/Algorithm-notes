@@ -1,0 +1,133 @@
+拓展1 数学思想逼近法
+计算根号2的近似值，精确到10的-5次
+令浮点型left和right分别为1和2，根据mid处f(x)的值与2的大小选择子区间进行逼近
+
+接下来直接上代码
+const double eps=1e-5;//精度为10的-5次
+double f(double x)
+{
+	return x*x;
+} 
+double calSqrt()
+{
+	double left=1,right=2,mid;
+	while(right-left>eps)
+	{
+		mid=(right+left)/2;
+		if(f(mid)>2)
+		right=mid;
+		else
+		left=mid;
+	}
+	return mid;
+} 
+
+以二分法逼近为模板，进行数学建模，解决数学问题，如装水问题，其中列出相应的数学方程，在用逼近思想即可解答
+
+而对于木棍分割问题，将问题转化为第一个出现不符合条件的情况，-1即可得相应的结果
+#include<iostream>
+using namespace std;
+int N,wood[100];
+int F(int A[],int length,int N)
+{
+	int k=0;
+	for(int i=0;i<N;i++)
+	{
+		k+=A[i]/length;
+	}
+	return k;
+}
+int solve(int K,int len)
+{
+	int left=0,right=len,mid;
+	while(right>left)
+	{
+		mid=(left+right)/2;
+		if(F(wood,mid,N)<K)
+		{
+			right=mid;
+		}
+		else
+		{
+			left=mid+1;
+		}
+	}
+	return left-1;
+}
+int main()
+{
+	int K;
+	int max_len=-1;
+	cin>>N>>K;
+	for(int i=0;i<N;i++)
+	{
+		cin>>wood[i];
+		if(wood[i]>=max_len)
+		max_len=wood[i];
+		
+	}
+	cout<<solve(K,max_len);
+}
+这段代码要明确两点，第一，选择最长的一个木棍作为right的数值，这样才能包含所有
+第二，原本求最后一个k>=k时L的长度可以转化为第一个k<K的L，而二分模板只要在最后-1就可
+
+给出N个线段的长度，试将它们头尾相接（顺序任意）地组合成一个凸多边形
+使得该凸多边形的外接圆（即能使凸多边形的所有顶点都在圆周上的圆）的半径最大
+求该最大半径。其中N不超过1e5，线段长度均不超过100，要求算法中不涉及坐标运算。
+#include<iostream>
+#include<stdio.h>
+#include<math.h>
+const double PI=acos(-1.0);
+const double eps=1e-5;//比较精度
+double maxEdge=0.0;
+double maxAngle=0.0;
+double sum = 0.0;
+double edges[100];
+int N;
+double sum_angle(double edges[],int n,double r)
+{
+	sum = 0.0;
+    for(int i =0;i<n;i++)
+        sum+=asin(edges[i]/2/r)*2;
+    	return sum;
+}
+double R(double r)
+{
+	if(fabs(sum_angle(edges,N,r)-PI*2)<eps)
+   		return r;
+    else
+    {
+    	double left =r,right=10000000,mid;
+    	maxAngle=asin(r/mid)*2;
+    	while(right -left >eps){
+         	mid = (right + left) /2;
+         	sum=sum_angle(edges,N,mid);
+         	if(sum-maxAngle<PI){
+             	if( sum<2*maxAngle)
+                 	left = mid;
+            	 else
+                 	right = mid;
+        	 }
+         	else{
+             	if(sum>2*PI)
+                 left = mid;
+             	else
+                right = mid;
+         		}
+   	 		}
+   	return mid;
+    }
+}
+int main(){
+	double r_max;
+	cin>>N;
+    for(int i=0;i<N;i++)
+	{
+        cin>>edges[i];
+        if(edges[i]>maxEdge)
+        maxEdge = edges[i];
+    }
+	r_max=R(maxEdge/2);
+	printf("%lf",r_max);
+    return 0;
+ }
