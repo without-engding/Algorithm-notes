@@ -1,0 +1,56 @@
+sort(first_pointer,first_pointer+n,cmp)
+
+该函数可以给数组，或者链表list、向量排序。
+
+实现原理：sort并不是简单的快速排序，它对普通的快速排序进行了优化，
+此外，它还结合了插入排序和推排序。系统会根据你的数据形式和数据量自动选择合适的排序方法，
+这并不是说它每次排序只选择一种方法，它是在一次完整排序中不同的情况选用不同方法，比如给一个数据量较大的数组排序，
+开始采用快速排序，分段递归，分段之后每一段的数据量达到一个较小值后它就不继续往下递归，而是选择插入排序，如果递归的太深，他会选择推排序。
+
+在做这一篇笔记的时候，我很好奇sort和快速排序和归并排序之间的区别，然后我看到了以上的内容，发现。嗯，在简单的排序方法面前，sort简直无敌
+
+但还是把快速排序说一下，但是因为GitHub上很难做图片和视频资料，而这一块内容个人认为比较，嗯，比较难
+所以这里把归并排序和快速排序一起用视频的方式讲掉
+百度云链接：
+链接：https://pan.baidu.com/s/1m-D05-uEGOetK9FnuJa63Q 
+提取码：2im6
+
+int Partition(int A[],int left,int right)
+{
+	int temp=A[left];
+	while(left<right)
+	{
+		while(left<right&&A[right]>temp)right--;
+		A[left]=A[right];
+		while(left<right&&A[left]<temp)left++;
+		A[right]=A[left];
+	}
+	A[left]=temp;
+	return left;
+}
+void quickSort(int A[],int left,int right)
+{
+	if(left<right)
+	{
+		int pos=Partition(A,left,right);
+		quickSort(A,left,pos-1);
+		quickSort(A,pos+1,right);
+	}
+}
+#include<stdlib.h>
+#include<time.h>
+int randPartition(int A[],int left,int right)
+{
+	int p=(round(1.0*rand()/RAND_MAX*(right-left)+left))
+	swap(A[p],A[left]);
+	int temp=A[left];
+	while(left<right)
+	{
+		while(left<right&&A[right]>temp)right--;
+		A[left]=A[right];
+		while(left<right&&A[left]<temp)left++;
+		A[right]=A[left];
+	}
+	A[left]=temp;
+	return left;
+}
