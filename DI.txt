@@ -1,0 +1,55 @@
+#include<iostream>
+#include<map>
+#include<stdio.h>
+#include<algorithm>
+using namespace std;
+const int maxn=11;
+int n,hashLable[maxn]={false};
+char num[maxn];
+char P[maxn];
+map<int,char>mp;
+void permutation(int index)
+{
+	if(index==n+1)
+	{
+		for(int i=1;i<=n;i++)
+			{
+				cout<<P[i];
+			}
+			cout<<endl;
+		return;
+	}
+	for(int x=1;x<=n;x++)
+	{
+		if(hashLable[x]==false)
+		{
+			map<int ,char>::iterator it =mp.find(x);
+			P[index]=it->second;
+			hashLable[x]=true;
+			permutation(index+1);
+			hashLable[x]=false;
+		}
+	}
+}
+int main()
+{
+	cout<<"please give the number you want to permutate:";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>num[i];
+
+	}
+	sort(num,num+n);
+		for(int i=1;i<=n;i++)
+	{
+		mp[i]=num[i-1];
+
+	}
+	for(map<int ,char>::iterator it=mp.begin();it!=mp.end();it++)
+	{
+		cout<<it->first<<it->second<<endl;
+	} 
+	permutation(1);
+	return 0;
+}
