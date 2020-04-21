@@ -4,7 +4,7 @@ eps=1e-8
 #include<stdio.h>
 #include<math.h>
 #define Epu(a,b)(fabs((a)-(b))<(eps))
-const double eps=1e-8;//这里说明，1e前的1为数字1 
+const double eps=1e-8;//这里说明，1e前的1为数字1 //const double PI=acos(-1.0)
 int main()
 {
 	double a=3.1415926;
@@ -33,7 +33,7 @@ int main()
 <:
 #include<stdio.h>
 #include<math.h>
-#define Less(a,b)(((a)-(b))<(eps))
+#define Less(a,b)(((a)-(b))<(-eps))
 const double eps=1e-8;
 int main()
 {

@@ -1,6 +1,6 @@
 使用前加上math.h
 
-fabs(double x) 绝对值
+fabs(double x) 绝对值//#include<algotithm>  abs()
 
 floor(double x)向下取整
 
