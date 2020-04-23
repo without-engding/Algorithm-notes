@@ -1,0 +1,163 @@
+对于分数的表示，通常利用结构体
+struct Fraction()
+{
+  long long up,down;
+};
+其中分数化简
+1.为了运算简便，统一将分数中的负号移至分子前
+2.如果分子为0，则另分母为1
+3.对分子和分母的绝对值求gcd，然后令分子分母同除gcd
+
+
+
+其中分数运算直接上代码
+这里用到了c++中结构体的构造函数
+#include<iostream>
+#include<algorithm>
+#include<stdio.h>
+using namespace std;
+struct Fraction{
+	long long up,down;
+}a,b;
+long long gcd(long a,long b)
+{
+	if(b==0)return a;
+	else return gcd(b,a%b);
+}
+Fraction reduction(Fraction result)
+{
+	long long d;
+	if(result.down<0)
+	{
+		result.down=-result.down;
+		result.up=-result.up;
+	}
+	if(result.up==0)
+	result.down=1;
+	else
+	{
+	d=gcd(abs(result.up),abs(result.down));
+	result.up/=d;
+	result.down/=d;	
+	}
+	return result;
+}
+
+Fraction add(Fraction a,Fraction b)
+{
+	Fraction result;
+	result.up=a.up*b.down+b.up*a.down;
+	result.down=a.down*b.down;
+	return reduction(result);
+}
+Fraction minu(Fraction a,Fraction b)
+{
+	Fraction result;
+	result.up=a.up*b.down-b.up*a.down;
+	result.down=a.down*b.down;
+	return reduction(result);
+}
+Fraction divide(Fraction a,Fraction b)
+{
+	Fraction result;
+	result.up=a.up*b.down;
+	result.down=a.down*b.up;
+	return reduction(result);
+}
+Fraction multi(Fraction a,Fraction b)
+{
+	Fraction result;
+	result.up=a.up*b.up;
+	result.down=a.down*b.down;
+	return reduction(result);
+}
+void show(Fraction r)
+{
+	r=reduction(r);
+	if(r.down==1)
+	cout<<r.up;
+	else if(r.up>r.down)
+	printf("%d %d/%d",r.up/r.down,abs(r.up)%r.down,r.down);
+	else
+	printf("%d/%d",r.up,r.down);
+}
+int main(){
+    char c;
+    while(scanf("%d/%d %d/%d %c",&a.up,&a.down,&b.up,&b.down,&c)!=EOF){
+        if(c=='+') show(add(a,b));
+        else if(c=='-') show(minu(a,b));
+        else if(c=='*') show(multi(a,b));
+        else if(c=='/') show(divide(a,b));
+    }
+    return 0;
+}
+
+因为找了一下pat和codeup中都没有相应的题目，所以上述代码。。不作为什么，就作为了解和熟悉，这是结构体的新境界
+
+而根据上述代码，我自己内化了一个程序，并根据patA1081中的题目通过了测试
+#include<iostream>
+#include<algorithm>
+#include<math.h>
+#include<stdio.h>
+using namespace std;
+struct Fraction{
+	long long up,down;
+}num[110];
+long long gcm(long long a ,long long b)
+{
+	if(b==0)return a;
+	else return gcm(b,a%b);
+}
+Fraction reduction(Fraction a)
+{
+	if(a.down<0)
+	{
+		a.up=-a.up;
+		a.down=-a.down;
+	}
+	else if(a.up==0)
+	a.down=1;
+	else
+	{
+		int d=gcm(fabs(a.up),fabs(a.down));
+		a.up/=d;
+		a.down/=d;
+	}
+	return a;
+}
+Fraction sum(Fraction a ,Fraction b)
+{
+	Fraction result;
+	b=reduction(b);
+	result.up=a.up*b.down+b.up*a.down;
+	result.down=a.down*b.down;
+	return reduction(result);
+}
+void show(Fraction a)
+{
+	a=reduction(a);
+	if(a.down==1)cout<<a.up;
+	else if(a.up>a.down)
+	printf("%lld %lld/%lld",a.up/a.down,int(fabs(a.up))%a.down,a.down);
+	else
+	printf("%lld/%lld",a.up,a.down);
+	
+}
+int main()
+{
+	int n;
+	cin>>n;
+	Fraction result;
+	result.up=0;
+	result.down=0;
+	result=reduction(result);
+	for(int i=0;i<n;i++)
+	{
+		scanf("%lld/%lld",&num[i].up,&num[i].down);
+		result=sum(result,num[i]);
+	}
+	show(result);
+	return 0;
+}
+此类题目是对结构体的高级应用
+同时，针对分数化简和分数输出，是重点内容，应该多多翻阅
