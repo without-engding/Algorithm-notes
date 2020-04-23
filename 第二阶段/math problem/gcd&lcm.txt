@@ -1,0 +1,25 @@
+最大公约数
+
+中心数学思想，辗转相除法
+其中公约数用gcd命名函数
+用递归思想进行书写
+递归式 gcd(a,b)=gcd(b,a%b)
+递归边界 gcd(a,o)=a
+所以函数为:
+int gcd(int a,int b)
+{
+  if(b==0)return a;
+  else return gcd(b,a%b);
+}
+
+最小公倍数
+其中根据公式法，两个数a,b的乘积等于最大公约数*最小公倍数
+所以，最小公倍数等于a*b/gcd(a,b)
+为了避免a*b溢出，所以采用a/gcd(a,b)*b
+其中用函数lcm()表示
+int lcm(int a,int b)
+{
+  int d=gcd(a,b);
+  return a/d*b;
+}
+
