@@ -1,0 +1,49 @@
+大数运算
+第一，大数存储，一般大数存储主要用数组替换，但为了同时了解数据长度，因此用结构体进行定义
+struct bign{
+  int d[1000];
+  int len;
+};
+同时这里为了方便初始化，进行string库函数的运用，同时考虑构造函数的使用
+struct bign{
+  int d[1000];
+  int len;
+  bign()
+  {
+    memset(d,0,sizeof(d);
+    len=0;
+  }
+};
+而输入大整数的时候，一般用字符串读入，然后再用字符串另存到结构体中
+bign change(char str[])
+{
+  bign a;
+  a.len=strlen(str);
+  for(int i=0;i<a.len;i++)
+  {
+    a.d[i]=str[len-i-1]-'0';
+  }
+  return a;
+}
+
+而如果需要比较两个bign变量的大小的时候，相比较长度，再从高到低逐位比较
+int compare(bign a,bign b)
+{
+	if(a.len>b.len)return 1;
+	else if(a.len<b.len)return -1;
+	else 
+	{
+		for(int i=a.len-1;i>=0;i--)
+		{
+			if(a.d[i]>b.d[i])return 1;//a大 
+			else if(a.d[i]<b.d[i])return -1;//b大 
+		}
+		return 0;//相等 
+	}
+}
+
+大数的四则运算
+1.高精度加法
+2.高精度减法
+3.高精度乘法
+4.高精度除法
