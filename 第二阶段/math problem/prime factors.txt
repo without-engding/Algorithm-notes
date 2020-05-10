@@ -24,4 +24,25 @@ if(n!=1)
 	fac[num].x=n;
 	fac[num++].cnt=1;
 }
+PAT (Advanced Level) Practice
+公告
+原PAT网站用户可在 https://patest.cn/bind_old_pat_user 页面绑定至拼题A账号。绑定后，原PAT网站的提交将被合并至拼题A网站用户的对应题目集中。
 
+返回
+1059 Prime Factors (25分)
+Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1​​ ​k​1​​ ​​ ×p​2​​ ​k​2​​ ​​ ×⋯×p​m​​ ​k​m​​ ​​ .
+
+Input Specification:
+Each input file contains one test case which gives a positive integer N in the range of long int.
+
+Output Specification:
+Factor N in the format N = p
+​1​​ ^k​1​​ *p​2​​ ^k​2​​ *…*p​m​​ ^k​m​​ , where p​i​​ 's are prime factors of N in increasing order, and the exponent k​i​​  is the number of p​i​​  -- hence when there is only one p​i​​ , k​i​​  is 1 and must NOT be printed out.
+
+Sample Input:
+97532468
+
+      
+    
+Sample Output:
+97532468=2^2*11*17*101*1291
