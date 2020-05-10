@@ -1,0 +1,27 @@
+质因数分解
+直接讲思路
+第一步，利用结构体的方式，记录质因数和因数出现的个数
+而其中因为int型的数据范围，所以结构体中的数组长度可以定义为10
+struct factor{
+  int x,num;
+}fac[10];
+而其中一点小思想在视频中呈现了，这边不再多说，直接上代码，自行理解
+链接：https://pan.baidu.com/s/1o84AI6tW2rvs4h0m-8PvvQ 
+提取码：hlvh
+if(n%prime[i]==0)
+{
+	fac[num].x=prime[i];
+	fac[num].num-0;
+	while(n%prime[i]==0)
+	{
+		fac[num].num++;
+		n/=prime[i];
+	}
+	num++;
+} 
+if(n!=1)
+{
+	fac[num].x=n;
+	fac[num++].cnt=1;
+}
+
