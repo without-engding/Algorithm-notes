@@ -44,6 +44,99 @@ int compare(bign a,bign b)
 
 大数的四则运算
 1.高精度加法
+bign add(bign a ,bign b)
+{
+	bign c;
+	int carry=0;//存储进位信息 
+	for(int i=0;i<a.len||i<b.len;i++)
+	{
+		int temp=a.d[i]+b.d[i]+carry;
+		c.d[c.len++]=temp%10;
+		carry=temp/10;
+	}
+	if(carry!=0)
+	{
+		c.d[c.len++]=carry;
+	}
+	return c;
+} 
+
 2.高精度减法
+bign sub(bign a ,bign b)
+{
+	bign c;
+	for(int i=0;i<a.len||i<b.len;i++)
+	{
+		if(a.d[i]<b.d[i])
+		{
+			a.d[i+1]--;
+			a.d[i]+=10;
+		}
+		c.d[c.len++]=a.d[i]-b.d[i];
+	}
+	while(c.len-1>=1&&c.d[c.len-1]==0)
+	{
+		c.len--;
+	}
+	return c;
+}
+
 3.高精度乘法
+其实个人认为以下给出的高精度乘法并不是实际意义上的高精度乘法，而是低精度*高精度的一个乘法，但该思想不能应用于双高精度的乘法
+针对双高精度的乘法，后续再进行补充
+这里简单说明一下程序思想，这里是通过把低精度看做一个整体，然后于高精度相乘后求和
+bign multi(bign a ,bign b)
+{
+	bign c;
+	int carry;
+	for(int i=0;i<a.len;i++)
+	{
+		 int temp=a.d[i]*b+carry;
+		 c.d[c.len++]=temp%10;
+		 carry=temp/10;
+	}
+	while(carry!=0)
+	{
+		c.d[c.len++]=carry%10;
+		carry/=10; 
+	}
+	return c;
+}
+
 4.高精度除法
+bign divide(bign a, bign b,int &r)
+{
+	bign c;
+	c.len=a.len;
+	for(int i=a.len-1;i>=0;i--)
+	{
+		carry=carry*10+a.d[i];
+		if(carry<b) c.d[i]=0;
+		else
+		{
+			c.d[i]=carry/b;
+			carry%=b;
+		}
+	}
+	while(c.len-1>=1&&c.d[c.len-1]==0)
+	{
+		c.len--;
+	}
+	return c;
+}
+
+看过上述代码，我相信你们肯定会有自己的见解，我这边说一个总结
+第一，以上的四则运算大都没有对具体的情况进行分类讨论，包括如果是负数，如何确定减数和被减数，包括乘数和被乘数等等
+这个是我们要在具体运算中加以注意的
+
+第二，我们总结一些几段代码的想法，其实就是我们小学学的加减乘除，对数进行操作，除了大数相乘，自行写下行列式就可以理解
+
+第三，针对加法和乘法，其实行列式的写法我很清楚，但我之前一直很好奇如果把错位的形式表现出来，但是通过carry变量存储进位信息就可以实现这个错位相加，而针对进位，就要考虑到新增位数，到两数相加或相乘的数字位数超过当前位数，就要扩展数组进行存储
+
+第四，针对减法和除法，其实就是借位和去零，其中当当前数不够剪的时候，就向前借位，然后将当前位+10，而当不够除的时候，当前为的商设置为0，并存储当前位作为进位算进下一位数中。最后除去多余的零
+
+上述的代码块都只是提供了一个思路，因为我们针对这一块内容没有习题，那么我们就做一个小任务，利用以上代码块做一个高精度计算器出来
+同时问题也在拓展，针对小数，又如何处理
+
+
+
